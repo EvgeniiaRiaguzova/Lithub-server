@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-const isLoggedIn = require('../middleware/isLoggedIn')
-const fileUploader = require("../config/cloudinary.config");
+
 
 const Booke = require('../models/Book.model');
 const Comment = require('../models/Comment.model'); 
