@@ -24,7 +24,7 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
 const bookRouter = require("./routes/book.routes");
-app.use("/api",  isAuthenticated, bookRouter);
+app.use("/api/books",  bookRouter);
 
 const authRouter = require("./routes/auth.routes");          
 app.use("/auth", authRouter);  
