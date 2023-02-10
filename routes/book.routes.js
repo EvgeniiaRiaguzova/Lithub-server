@@ -4,33 +4,33 @@ const router = express.Router();
 
 
 
-const Booke = require('../models/Book.model');
+const Book = require('../models/Book.model');
 const Comment = require('../models/Comment.model'); 
 const User = require('../models/User.model');
 
 
-router.get('/books', (req, res) => {
+router.get('/', (req, res) => {
   Book.find()
     .then(books => res.json(books))
     .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
 });
 
 
-router.get('books/:booksId', (req, res) => {
+router.get('/:booksId', (req, res) => {
   Book.findById(req.params.id)
     .then(book => res.json(book))
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 });
 
 
-router.post('/books', (req, res) => {
+router.post('/', (req, res) => {
   Book.create(req.body)
     .then(book => res.json({  message: 'Book added successfully' }))
     .catch(err => res.status(400).json({ error: 'Unable to add this book' }));
 });
 
 //update book
-router.put('books/:booksId', (req, res) => {
+router.put('/:booksId', (req, res) => {
   Book.findByIdAndUpdate(req.params.id, req.body)
     .then(book => res.json({  message: 'Updated successfully' }))
     .catch(err =>
@@ -39,7 +39,7 @@ router.put('books/:booksId', (req, res) => {
 });
 
 //Delete book
-router.delete('books/:booksId', (req, res) => {
+router.delete('/:booksId', (req, res) => {
   Book.findByIdAndRemove(req.params.id, req.body)
     .then(book => res.json({  message: 'Book deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No book found' }));
