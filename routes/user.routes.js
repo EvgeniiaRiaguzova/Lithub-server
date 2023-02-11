@@ -16,7 +16,7 @@ router.put("/", isAuthenticated, (req, res, next) => {
 });
 
 //USER DELETE
-router.post("/delete", isAuthenticated, (req, res, next) => {
+router.delete("/delete", isAuthenticated, (req, res, next) => {
   console.log("hello delete")
     const userId = req.payload._id;
 
