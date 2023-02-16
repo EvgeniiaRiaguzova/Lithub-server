@@ -26,7 +26,7 @@ const userSchema = new Schema(
    },
    profileImage: {
     type: String,
-    default: "assets/defaul-user-img.png"
+    default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
    },
    status: 
    {

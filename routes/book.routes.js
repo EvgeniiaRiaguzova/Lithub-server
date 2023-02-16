@@ -17,7 +17,9 @@ router.get('/', (req, res) => {
 
 
 router.get('/:booksId', (req, res) => {
-  Book.findById(req.params.id)
+
+  Book.findById(req.params.booksId)
+
     .then(book => res.json(book))
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 });
@@ -31,7 +33,9 @@ router.post('/', (req, res) => {
 
 //update book
 router.put('/:booksId', (req, res) => {
-  Book.findByIdAndUpdate(req.params.id, req.body)
+
+  Book.findByIdAndUpdate(req.params.booksId, req.body)
+
     .then(book => res.json({  message: 'Updated successfully' }))
     .catch(err =>
       res.status(400).json({ error: 'Unable to update the Database' })
@@ -40,7 +44,9 @@ router.put('/:booksId', (req, res) => {
 
 //Delete book
 router.delete('/:booksId', (req, res) => {
-  Book.findByIdAndRemove(req.params.id, req.body)
+
+  Book.findByIdAndRemove(req.params.booksId, req.body)
+
     .then(book => res.json({  message: 'Book deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No book found' }));
 });
