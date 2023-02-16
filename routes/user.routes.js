@@ -10,6 +10,7 @@ router.get("/profile", isAuthenticated, (req, res, next) => {
     const userId = req.payload._id;
     res.status(200).json(req.payload);
 
+    
     User.findById(userId)
         .then(() => res.json({_id, username, email, bio, profileImage, status}))
         .catch(err => console.error(err))
