@@ -17,7 +17,7 @@ const bookSchema = new Schema({
     default:`book-cover-placeholder.png`
   },
 
-  author:  [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  author: { type: Schema.Types.ObjectId, ref: 'User' },
 
   gerne:{type: String },
   
