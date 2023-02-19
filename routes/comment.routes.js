@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 const Comment = require('../models/Comment.model');
 const Book = require('../models/Book.model');
+const User = require("../models/User.model");
 
 
 //  Creates a new comment
@@ -32,13 +33,13 @@ router.get('/comments', (req, res, next) => {
 });
 
 
-router.get('/:id/comment', (req, res, next) => {
+/*router.get('/:id/comment', (req, res, next) => {
 
   const {id} = req.params
 
 Book.findById(id)
 
-  .then(foundBook => res.render('books/comment', foundBook))
+  .then(foundConcert => res.render('books/comment', foundBook))
   .catch(err => console.log(err))
 
 });
@@ -69,10 +70,10 @@ router.post('/:bookId/comment', isAuthenticated, (req, res, next) => {
               })
               .catch(err => console.log(err))
       })
-      .then(() => res.redirect('/books'))
+      .then(() => res.redirect('/bookss'))
       .catch(err => console.log(err))
 
-});
+});*/
 //Delete comment
 router.delete('/:commentsId', (req, res) => {
   Comment.findByIdAndRemove(req.params.id, req.body)
