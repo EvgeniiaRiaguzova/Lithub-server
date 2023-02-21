@@ -6,11 +6,14 @@ const User = require("../models/User.model");
 const router = express.Router();
 const { isAuthenticated } = require('./../middleware/jwt.middleware.js');
 const saltRounds = 10;
- 
+const fileUploader = require("../config/cloudinary.config");
  
 // POST /auth/signup  - Creates a new user in the database
-router.post('/signup', (req, res, next) => {
+router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => {
       const { username, email, password, bio, profileImage, status} = req.body;
+
+     // res.json({ fileUrl: req.file.path });
+
     console.log("the req.body is", req.body)
     // Check if username or passwordor campus or course are provided as empty string 
     if (username === '' || password === '' || email === '' || status === '') {
@@ -64,10 +67,10 @@ router.post('/signup', (req, res, next) => {
       .then((createdUser) => {
         // Deconstruct the newly created user object to omit the password
         // We should never expose passwords publicly
-        const {username, email, bio, profileImage, status, _id } = createdUser;
+        const {username, email, bio, profileImage, status, _id, books } = createdUser;
       
         // Create a new object that doesn't expose the password
-        const user = {username, email, bio, profileImage, status, _id};
+        const user = {username, email, bio, profileImage, status, _id, books};
    
         // Send a json response containing the user object
         res.status(201).json({ user: user });
@@ -108,7 +111,7 @@ router.post('/login', (req, res, next) => {
           
           // Create an object that will be set as the token payload
           const payload = { _id, username, email, bio, profileImage, 
-            status};
+            status, books};
    
           // Create and sign the token
           const authToken = jwt.sign( 
