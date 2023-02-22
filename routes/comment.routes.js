@@ -10,41 +10,43 @@ const User = require("../models/User.model");
 
 
 //  Creates a new comment
-router.post('/comments', isAuthenticated, (req, res, next) => {
+router.post('/comments/:id', isAuthenticated, (req, res, next) => {
   console.log(req.payload._id)
-  
+  const {id} = req.params;
   const userId = req.payload._id
-  const { user, comment, book } = req.body;
+  const { comment } = req.body;
 
-  Comment.create({ user: userId, comment, book })
+  Comment.create({ author: userId, comment, book:id })
     .then(newComment => {
-      return Book.findByIdAndUpdate(book, { $push: { comments: newComment._id } } );
+      return Book.findByIdAndUpdate(id, { $push: { comments: newComment._id } } );
     })
     .then(response => res.json(response))
     .catch(err => res.json(err));
 });
 
 // all of the books
-router.get('/comments', (req, res, next) => {
+router.get('/comments', async (req, res, next) => {
   Book.find()
     .populate('comments')
     .then(allBooks => res.json(allBooks))
-    .catch(err => res.json(err));
+    .catch(err => res.json(err)); 
+
+
 });
 
 
-/*router.get('/:id/comment', (req, res, next) => {
+router.get('/:id/comment', (req, res, next) => {
 
   const {id} = req.params
 
 Book.findById(id)
 
-  .then(foundConcert => res.render('books/comment', foundBook))
+  .then(foundBook => res.render('books/comment', foundBook))
   .catch(err => console.log(err))
 
 });
 
-router.post('/:bookId/comment', isAuthenticated, (req, res, next) => {
+/* router.post('/:bookId/comment', isAuthenticated, (req, res, next) => {
   console.log(req.payload._id)
 
   const userId = req.payload._id
@@ -73,7 +75,7 @@ router.post('/:bookId/comment', isAuthenticated, (req, res, next) => {
       .then(() => res.redirect('/bookss'))
       .catch(err => console.log(err))
 
-});*/
+}); */
 //Delete comment
 router.delete('/:commentsId', (req, res) => {
   Comment.findByIdAndRemove(req.params.id, req.body)
