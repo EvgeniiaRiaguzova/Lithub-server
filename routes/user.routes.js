@@ -4,15 +4,16 @@ const router = express.Router();
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
+
 //USER DISPLAY 
 router.get("/profile", isAuthenticated, (req, res, next) => {
-    const { username, email, bio, profileImage, status } = req.body;
+   // const { username, email, bio, profileImage, status } = req.body;
     const userId = req.payload._id;
     res.status(200).json(req.payload);
 
     
     User.findById(userId)
-        .then(() => res.json({_id, username, email, bio, profileImage, status}))
+        .then((userFound) => res.json(userFound))
         .catch(err => console.error(err))
 });
 //test
