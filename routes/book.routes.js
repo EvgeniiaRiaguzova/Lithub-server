@@ -37,11 +37,11 @@ console.log("the payload" ,req.payload)
 
   const book = await Book.create(bookCreated)
 
-  const user = await User.findById(req.payload._id)
+  const user = await User.findById(req.payload._id).populate("books")
   user.books.push(book._id)
   await user.save()
 
-  res.json({message: 'Book added successfully'})
+  res.json({message: 'Book added successfully', user})
   
 /*
   Book.create(bookCreated)

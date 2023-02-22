@@ -67,10 +67,10 @@ router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => 
       .then((createdUser) => {
         // Deconstruct the newly created user object to omit the password
         // We should never expose passwords publicly
-        const {username, email, bio, profileImage, status, _id, books } = createdUser;
+        const {username, email, bio, profileImage, status, _id} = createdUser;
       
         // Create a new object that doesn't expose the password
-        const user = {username, email, bio, profileImage, status, _id, books};
+        const user = {username, email, bio, profileImage, status, _id};
    
         // Send a json response containing the user object
         res.status(201).json({ user: user });
@@ -93,7 +93,7 @@ router.post('/login', (req, res, next) => {
     }
    
     // Check the users collection if a user with the same email exists
-    User.findOne({ email })
+    User.findOne({ email }).populate("books")
       .then((foundUser) => {
         if (!foundUser) {
           // If the user is not found, send an error response
