@@ -3,7 +3,7 @@ const router = express.Router();
 
 const User = require("../models/User.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
-
+const fileUploader = require("../config/cloudinary.config");
 
 //USER DISPLAY 
 router.get("/profile", isAuthenticated, (req, res, next) => {
@@ -16,9 +16,9 @@ router.get("/profile", isAuthenticated, (req, res, next) => {
         .then((userFound) => res.json(userFound))
         .catch(err => console.error(err))
 });
-//test
+
 //USER UPDATE
-router.put("/edit", isAuthenticated, (req, res, next) => {
+router.put("/edit", isAuthenticated, fileUploader.single("profileImage"), (req, res, next) => {
     const { username, email, bio, profileImage, status } = req.body;
     const userId = req.payload._id;
     console.log(userId)

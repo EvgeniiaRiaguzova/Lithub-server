@@ -12,8 +12,6 @@ const fileUploader = require("../config/cloudinary.config");
 router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => {
       const { username, email, password, bio, profileImage, status} = req.body;
 
-     // res.json({ fileUrl: req.file.path });
-
     console.log("the req.body is", req.body)
     // Check if username or passwordor campus or course are provided as empty string 
     if (username === '' || password === '' || email === '' || status === '') {
