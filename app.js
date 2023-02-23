@@ -37,7 +37,7 @@ app.use("/api/users", userRouter);
 const commentRouter = require("./routes/comment.routes");
 app.use("/api/comments", isAuthenticated, commentRouter);
 
-app.post("/upload", upload.single("myFile"), (req,res)=> {
+app.post("/upload", upload.single("profileImage"), (req,res)=> {
     try {
         console.log("check the conee")
            res.json(req.file)
