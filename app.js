@@ -5,6 +5,7 @@ require("dotenv").config();
 // ℹ️ Connects to the database
 require("./db");
 
+const upload = require("./config/cloudinary.config")
 
 //import the isAuthenticated middleware and use it to protect protected routes:
 const { isAuthenticated } = require("./middleware/jwt.middleware")
@@ -35,6 +36,16 @@ app.use("/api/users", userRouter);
 
 const commentRouter = require("./routes/comment.routes");
 app.use("/api/comments", isAuthenticated, commentRouter);
+
+app.post("/upload", upload.single("profileImage"), (req,res)=> {
+    try {
+        console.log("check the conee")
+           res.json(req.file)
+    } catch (error) {
+        console.log(error)
+    }
+ 
+})
 
 
 

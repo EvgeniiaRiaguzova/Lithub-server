@@ -22,7 +22,10 @@ const bookSchema = new Schema({
   gerne:{type: String },
   
   
+
   contense: {type: String },
+
+ 
 
   comments: [
   {     type :mongoose.Schema.Types.ObjectId ,

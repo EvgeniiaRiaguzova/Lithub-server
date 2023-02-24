@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model , SchemaTypes } = require("mongoose");
 
 const userSchema = new Schema(
   {
@@ -34,8 +34,12 @@ const userSchema = new Schema(
     enum: ["Author", "Reader"],
     required: [true, 'Status is required.']
    },
-    books: [{type: Schema.Types.ObjectId, ref: "Book"}]
-  },
+    books: {
+      type: [SchemaTypes.ObjectId],
+      ref:"Book",
+      default:[]
+    }
+     },
   {
     timestamps: true
   }
