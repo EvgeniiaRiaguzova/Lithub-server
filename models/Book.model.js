@@ -19,10 +19,10 @@ const bookSchema = new Schema({
 
   author: { type: Schema.Types.ObjectId, ref: 'User' },
 
-  gerne:{type: String },
+  genre:{type: String },
   
   
-  contence: {type: String},
+  content: {type: String},
 
   comments: [
   {     type :mongoose.Schema.Types.ObjectId ,

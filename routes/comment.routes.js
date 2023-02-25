@@ -11,7 +11,7 @@ const User = require("../models/User.model");
 
 //  Creates a new comment
 router.post('/comments', isAuthenticated, (req, res, next) => {
-  console.log(req.payload._id)
+ 
   
   const userId = req.payload._id
   const { user, comment, book } = req.body;
