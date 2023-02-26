@@ -22,6 +22,7 @@ router.post('/comments/:id', isAuthenticated, (req, res, next) => {
     .then(newComment => {
       return Book.findByIdAndUpdate(id, { $push: { comments: newComment._id } } );
     })
+
     .then(response => res.json(response))
     .catch(err => res.json(err));
 });
