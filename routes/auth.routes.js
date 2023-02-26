@@ -12,7 +12,7 @@ const fileUploader = require("../config/cloudinary.config");
 router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => {
       const { username, email, password, bio, profileImage, status} = req.body;
 
-    console.log("the req.body is", req.body)
+   
     // Check if username or passwordor campus or course are provided as empty string 
     if (username === '' || password === '' || email === '' || status === '') {
       res.status(400).json({ message: "Provide username, password, email and status" });
@@ -22,7 +22,7 @@ router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => 
  // Use regex to validate the username format
  const usernameRegex = /^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
  if (!usernameRegex.test(username)) {
-    console.log(username, usernameRegex.test(username))
+    
    res.status(400).json({ message: 'Username must have between 6 and 20 characters ' });
    return;
  }
@@ -36,8 +36,7 @@ router.post('/signup', fileUploader.single("profileImage"), (req, res, next) => 
 
     // Use regex to validate the password format
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
-    console.log (password)
-    console.log (passwordRegex.test(password))
+  
     if (!passwordRegex.test(password)) {
       res.status(400).json({ message: 'Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter.' });
       return;
@@ -98,7 +97,7 @@ router.post('/login', (req, res, next) => {
           res.status(401).json({ message: "User not found." })
           return;
         }
-   console.log(password, foundUser.password)
+  
         // Compare the provided password with the one saved in the database
         const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
    
@@ -117,7 +116,7 @@ router.post('/login', (req, res, next) => {
             process.env.TOKEN_SECRET,
             { algorithm: 'HS256', expiresIn: "6h" }
           );
-          console.log (authToken)
+         
    
           // Send the token as the response
           res.status(200).json({ authToken: authToken });
