@@ -39,7 +39,7 @@ app.use("/api/comments", isAuthenticated, commentRouter);
 
 app.post("/upload", upload.single("profileImage"), (req,res)=> {
     try {
-        console.log("check the conee")
+      
            res.json(req.file)
     } catch (error) {
         console.log(error)

@@ -9,11 +9,12 @@ const fileUploader = require("../config/cloudinary.config");
 router.get("/profile", isAuthenticated, (req, res, next) => {
    // const { username, email, bio, profileImage, status } = req.body;
     const userId = req.payload._id;
-    res.status(200).json(req.payload);
+  
 
     
-    User.findById(userId)
-        .then((userFound) => res.json(userFound))
+   User.findById(userId).populate('books')
+        .then((userFound) => {console.log(userFound) ;
+            res.json(userFound)})
         .catch(err => console.error(err))
 });
 
@@ -21,23 +22,23 @@ router.get("/profile", isAuthenticated, (req, res, next) => {
 router.put("/edit", isAuthenticated, fileUploader.single("profileImage"), (req, res, next) => {
     const { username, email, bio, profileImage, status } = req.body;
     const userId = req.payload._id;
-    console.log(userId)
+ 
 
-    User.findByIdAndUpdate(userId, { username, email, bio, profileImage, status }, { new: true})
-        .then( ({_id, username, email, bio, profileImage, status}) => res.json({_id, username, email, bio, profileImage, status}))
+    User.findByIdAndUpdate(userId, { username, email, bio, profileImage, status }, { new: true}).populate('books')
+        .then( ({_id, username, email, bio, profileImage, status, books}) => res.json({_id, username, email, bio, profileImage, status, books}))
        .catch(err => console.error(err)) 
 });
 
 //USER DELETE
 router.delete("/delete", isAuthenticated, (req, res, next) => {
-  console.log("hello delete")
+
     const userId = req.payload._id;
 
     User.findByIdAndRemove(userId)
         .then(() => {
-            console.log("before the redi")
+         
             res.json('user deleted')
-            console.log("after the redi")
+         
         } )
         .catch(err => console.error(err))
 });
