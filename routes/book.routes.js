@@ -11,28 +11,37 @@ const User = require('../models/User.model');
 
 
 router.get('/', (req, res) => {
-  Book.find()
+  Book.find().populate('author')
     .then(books => res.json(books))
     .catch(err => res.status(404).json({ nobooksfound: 'No Books found' }));
 });
 
 
-router.get('/:booksId', (req, res) => {
-  Book.findById(req.params.booksId).populate("comments").populate("author")
- 
 
-    .then(book => res.json(book))
+
+router.get('/:booksId', (req, res) => {
+  Book.findById(req.params.booksId).populate("comments")
+  .populate({path: "comments",
+    populate: {
+      path: "author"
+    },
+    
+  })
+
+  
+    .then(book => { console.log(book); res.json(book)}) 
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 });
 
 
 router.post('/', isAuthenticated , async (req, res) => {
-console.log("the payload" ,req.payload)
+  const { title, genre, description, content} = req.body;
   const bookCreated = {
-    title: req.body.title,
-    genre:req.body.genre,
-    description:req.body.description,
-    author: req.payload._id
+    title,
+    genre,
+    description,
+    content,
+    author: req.payload._id,
   }
 
   const book = await Book.create(bookCreated)
