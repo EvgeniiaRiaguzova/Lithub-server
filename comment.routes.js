@@ -10,9 +10,11 @@ const User = require("../models/User.model");
 
 
 //  Creates a new comment
+
 router.post('/comments/:id', isAuthenticated, (req, res, next) => {
   console.log(req.payload._id)
   const {id} = req.params;
+
   const userId = req.payload._id
   const { comment } = req.body;
 
@@ -20,6 +22,7 @@ router.post('/comments/:id', isAuthenticated, (req, res, next) => {
     .then(newComment => {
       return Book.findByIdAndUpdate(id, { $push: { comments: newComment._id } } );
     })
+
     .then(response => res.json(response))
     .catch(err => res.json(err));
 });

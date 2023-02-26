@@ -20,17 +20,10 @@ router.get('/', (req, res) => {
 
 
 router.get('/:booksId', (req, res) => {
+  Book.findById(req.params.booksId).populate("comments").populate("author")
+ 
 
-  Book.findById(req.params.booksId).populate("comments")
-  .populate({path: "comments",
-    populate: {
-      path: "author"
-    },
-    
-  })
-
-  
-    .then(book => { console.log(book); res.json(book)}) 
+    .then(book => res.json(book))
     .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
 });
 
