@@ -24,7 +24,7 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   app.use(
     cors({
-      origin: ["https://lithub-free-publishing-source.netlify.app/", process.env.ORIGIN],
+      origin: ["http://localhost:3000", process.env.ORIGIN],
     })
   );
 
